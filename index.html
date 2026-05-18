@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
     <title>TOP GYM — Vrhunski Fitness</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +32,7 @@
             --lime2: #C7FF2F;
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
             background: var(--bg);
@@ -772,7 +772,9 @@
             .wellness-cards .zone-card { padding: 24px 18px !important; min-height: auto !important; }
             .wellness-cards .zone-card h3 { font-size: 22px !important; margin-bottom: 8px !important; }
             .wellness-cards .zone-card > div:first-child { font-size: 32px !important; margin-bottom: 14px !important; }
-            .lounge-strip { padding: 32px 24px !important; }
+            .lounge-strip { padding: 32px 24px !important; flex-direction: column !important; align-items: stretch !important; }
+            .lounge-strip > div:last-child { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+            .lounge-strip > div:last-child > div { padding: 16px 12px !important; }
 
             /* Pricing — force all grids to single column */
             [style*="grid-template-columns:repeat(5"] { grid-template-columns: 1fr !important; }
