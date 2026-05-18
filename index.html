@@ -766,11 +766,18 @@
             .zone-no { font-size: 48px; }
             .zone-row-arrow { display: none; }
 
+            /* Wellness section */
+            .wellness-hl { font-size: clamp(32px, 9vw, 52px) !important; }
+            .wellness-cards { grid-template-columns: 1fr 1fr !important; }
+            .wellness-cards .zone-card { padding: 24px 18px !important; min-height: auto !important; }
+            .wellness-cards .zone-card h3 { font-size: 22px !important; margin-bottom: 8px !important; }
+            .wellness-cards .zone-card > div:first-child { font-size: 32px !important; margin-bottom: 14px !important; }
+            .lounge-strip { padding: 32px 24px !important; }
+
             /* Pricing — force all grids to single column */
             [style*="grid-template-columns:repeat(5"] { grid-template-columns: 1fr !important; }
             [style*="grid-template-columns:repeat(4"],
             [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr 1fr !important; }
-            .lounge-strip { padding: 32px 24px !important; }
             [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
             [style*="grid-template-columns:1fr 2fr"]  { grid-template-columns: 1fr !important; }
 
@@ -1015,33 +1022,33 @@
         </p>
     </div>
 
-    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:2px; margin-bottom:2px;">
+    <div class="wellness-cards" style="display:grid; grid-template-columns: repeat(4,1fr); gap:2px; margin-bottom:2px;">
         <!-- SAUNA -->
         <div class="zone-card r" style="background:var(--card); padding:48px 36px; min-height:340px;">
             <div style="font-size:48px; margin-bottom:28px; line-height:1;">🔥</div>
             <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Sauna</h3>
-            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Finska sauna na visokim temperaturama. Opušta mišiće, detoksicira tijelo i poboljšava cirkulaciju — idealna nakon svakog treninga.</p>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Finska sauna za detoks, relaksaciju i oporavak mišića.</p>
             <div class="zone-bar"></div>
         </div>
         <!-- HOT TUB -->
         <div class="zone-card r d1" style="background:var(--card); padding:48px 36px; min-height:340px;">
             <div style="font-size:48px; margin-bottom:28px; line-height:1;">♨️</div>
             <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Hot Tub</h3>
-            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Topla kupka s hidro masažnim mlaznicama. Smanjuje napetost mišića, potiče oporavak i pruža pravo iskustvo relaksacije.</p>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Hidro masažne mlaznice smanjuju napetost i potiču regeneraciju.</p>
             <div class="zone-bar"></div>
         </div>
         <!-- COLD TUB -->
         <div class="zone-card r d2" style="background:var(--card); padding:48px 36px; min-height:340px;">
             <div style="font-size:48px; margin-bottom:28px; line-height:1;">❄️</div>
             <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Cold Tub</h3>
-            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Ledena kupka za brzo smanjenje upala i mišićnih bolova. Omiljeni alat profesionalnih sportaša — sada dostupan svima.</p>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Ledena kupka za smanjenje upala — alat profesionalnih sportaša.</p>
             <div class="zone-bar"></div>
         </div>
         <!-- HIDROMASAŽNI TUŠ -->
         <div class="zone-card r d3" style="background:var(--card); padding:48px 36px; min-height:340px;">
             <div style="font-size:48px; margin-bottom:28px; line-height:1;">🚿</div>
             <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Hidromasažni Tuš</h3>
-            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Masažni tuš s više načina rada za savršen završetak svake sesije. Kombiniraj s ostalim wellness sadržajima za potpun oporavak.</p>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Masažni tuš s više načina rada za savršen završetak sesije.</p>
             <div class="zone-bar"></div>
         </div>
     </div>
