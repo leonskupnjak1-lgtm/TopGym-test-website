@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP GYM — Vrhunski Fitness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=block" rel="stylesheet">
+    <style>
+        /* Hide headings until Bebas Neue is loaded to prevent FOUT */
+        h1, h2, h3, .hero-headline { visibility: hidden; }
+        .fonts-ready h1, .fonts-ready h2, .fonts-ready h3, .fonts-ready .hero-headline { visibility: visible; }
+    </style>
+    <script>
+        document.fonts.load('400 1em "Bebas Neue"').then(function() {
+            document.documentElement.classList.add('fonts-ready');
+        }).catch(function() {
+            document.documentElement.classList.add('fonts-ready');
+        });
+    </script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0A0A0A;
+            --bg2: #151515;
+            --card: #1F1F1F;
+            --white: #FFFFFF;
+            --muted: #B3B3B3;
+            --lime: #D4FF00;
+            --lime2: #C7FF2F;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 100;
+            padding: 28px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: padding .3s, background .3s, border-color .3s;
+            border-bottom: 1px solid transparent;
+        }
+        nav.scrolled {
+            padding: 18px 64px;
+            background: rgba(10,10,10,.92);
+            backdrop-filter: blur(24px);
+            border-color: rgba(255,255,255,.06);
+        }
+        .nav-logo img {
+            height: 48px;
+            filter: invert(1) brightness(1);
+            transition: opacity .2s;
+        }
+        .nav-logo img:hover { opacity: .8; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            transition: color .2s;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-cta {
+            color: #000 !important;
+            background: var(--lime);
+            padding: 10px 22px !important;
+            border-radius: 3px;
+            font-weight: 700 !important;
+            transition: background .2s, transform .15s !important;
+        }
+        .nav-cta:hover { background: var(--lime2) !important; transform: translateY(-1px); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: .3s; }
+
+        /* ─── HERO ─── */
+        .hero-bg-paths {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        @keyframes pulseBar {
+            0%   { transform: scaleY(var(--initial-scale)); }
+            100% { transform: scaleY(calc(var(--initial-scale) * 0.7)); }
+        }
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 64px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-glow {
+            position: absolute;
+            top: 30%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212,255,0,.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--lime);
+            margin-bottom: 36px;
+        }
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: var(--lime);
+        }
+        .hero-headline {
+            font-size: clamp(60px, 9.5vw, 130px);
+            font-weight: 900;
+            line-height: .9;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+            max-width: 860px;
+            margin-bottom: 36px;
+        }
+        .hero-headline em {
+            font-style: normal;
+            color: var(--lime);
+        }
+        .hero-body {
+            font-size: 16px;
+            line-height: 1.75;
+            color: var(--muted);
+            max-width: 520px;
+            margin-bottom: 52px;
+        }
+        .hero-actions { display: flex; align-items: center; gap: 14px; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 36px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all .2s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-lime { background: var(--lime); color: #000; }
+        .btn-lime:hover { background: var(--lime2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,255,0,.25); }
+        .btn-outline { border: 1px solid rgba(255,255,255,.2); color: var(--white); background: transparent; }
+        .btn-outline:hover { border-color: rgba(255,255,255,.5); }
+        .hero-scroll {
+            position: absolute;
+            bottom: 40px;
+            left: 64px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 11px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.75);
+        }
+        .scroll-indicator {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, rgba(255,255,255,.75), transparent);
+            animation: scrollDrop 2s ease-in-out infinite;
+        }
+        @keyframes ctaPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(212,255,0,.5); transform: translateY(0); }
+            50%  { box-shadow: 0 0 0 14px rgba(212,255,0,0); transform: translateY(-3px); }
+            100% { box-shadow: 0 0 0 0 rgba(212,255,0,0); transform: translateY(0); }
+        }
+        .btn-pulse { animation: ctaPulse 2.2s ease-in-out infinite; }
+
+        @keyframes scrollDrop {
+            0%, 100% { transform: scaleY(1); opacity: .3; }
+            50% { transform: scaleY(1.3); opacity: .7; }
+        }
+
+        /* ─── HERO CANVAS ─── */
+        #dotted-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100% !important;
+            height: 100% !important;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── STATS ─── */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: var(--bg2);
+            border-top: 1px solid rgba(255,255,255,.05);
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+        .stat {
+            padding: 52px 40px;
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,.05);
+        }
+        .stat:last-child { border-right: none; }
+        .stat-num {
+            font-size: 58px;
+            font-weight: 900;
+            letter-spacing: -.04em;
+            color: var(--lime);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .stat-lbl {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ─── SECTION SHARED ─── */
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--lime);
+            margin-bottom: 28px;
+        }
+        .section-tag::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--lime);
+        }
+        .sec { padding: 140px 64px; }
+        .sec-sm { padding: 80px 64px; }
+
+        /* ─── EXPERIENCE ─── */
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+        .exp-headline {
+            font-size: clamp(44px, 5.5vw, 80px);
+            font-weight: 900;
+            line-height: .92;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+        }
+        .exp-headline em { font-style: normal; color: var(--lime); }
+        .exp-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+        .feature-list { display: flex; flex-direction: column; gap: 14px; }
+        .feat {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--white);
+        }
+        .feat-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--lime);
+            flex-shrink: 0;
+        }
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+        .photo-placeholder {
+            background: var(--card);
+            position: relative;
+            overflow: hidden;
+        }
+        .photo-placeholder::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+        }
+        .photo-placeholder .ph-label {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.3);
+        }
+        .ph-num {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -.05em;
+            color: rgba(255,255,255,.04);
+        }
+        .ph-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--lime);
+        }
+        .ph-corner {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 32px; height: 32px;
+            border: 1px solid rgba(212,255,0,.4);
+            border-radius: 50%;
+        }
+
+        /* ─── ZONES ─── */
+        .zones-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 60px;
+            gap: 40px;
+        }
+        .zones-headline {
+            font-size: clamp(40px, 5vw, 68px);
+            font-weight: 900;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+            line-height: .92;
+        }
+        .zones-sub {
+            max-width: 300px;
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            text-align: right;
+        }
+        .zones-list { display: flex; flex-direction: column; }
+        .zone-row {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            align-items: center;
+            gap: 40px;
+            padding: 36px 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: background .35s;
+        }
+        .zone-row::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--lime);
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform .4s cubic-bezier(.4,0,.2,1);
+        }
+        .zone-row:first-child { border-top: 1px solid rgba(255,255,255,.06); }
+        .zone-row:hover::before { transform: scaleY(1); }
+        .zone-row:hover { background: rgba(212,255,0,.025); }
+        .zone-no {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 72px;
+            line-height: 1;
+            letter-spacing: .04em;
+            color: rgba(255,255,255,.08);
+            transition: color .35s, transform .35s cubic-bezier(.4,0,.2,1);
+        }
+        .zone-row:hover .zone-no { color: rgba(212,255,0,.6); transform: translateX(6px) scale(1.05); }
+        .zone-row-body { min-width: 0; transition: transform .35s cubic-bezier(.4,0,.2,1); }
+        .zone-row:hover .zone-row-body { transform: translateX(6px); }
+        .zone-name {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            transition: color .35s;
+        }
+        .zone-row:hover .zone-name { color: var(--lime); }
+        .zone-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+        /* ─── MEMBERSHIP ─── */
+        .membership-bg { background: var(--bg2); }
+        .membership-head { text-align: center; margin-bottom: 72px; }
+        .membership-headline {
+            font-size: clamp(44px, 5.5vw, 80px);
+            font-weight: 900;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .membership-sub { font-size: 15px; color: var(--muted); max-width: 460px; margin: 0 auto; }
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .plan {
+            background: var(--card);
+            border-radius: 6px;
+            padding: 48px 40px;
+            border: 1px solid rgba(255,255,255,.05);
+            transition: border-color .25s;
+        }
+        .plan:hover:not(.plan-featured) { border-color: rgba(212,255,0,.3); }
+        .plan-featured {
+            background: var(--lime);
+            border-color: var(--lime);
+        }
+        .plan-featured * { color: #000; }
+        .plan-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #000;
+            color: var(--lime) !important;
+            border-radius: 2px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+        .plan-name {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+        .plan-featured .plan-name { color: rgba(0,0,0,.55); }
+        .plan-price {
+            font-size: 64px;
+            font-weight: 900;
+            letter-spacing: -.05em;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .plan-price sup { font-size: 22px; font-weight: 700; letter-spacing: 0; }
+        .plan-period { font-size: 13px; color: var(--muted); margin-bottom: 36px; }
+        .plan-featured .plan-period { color: rgba(0,0,0,.5); }
+        .plan-feats { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+        .plan-feats li {
+            font-size: 14px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .plan-featured .plan-feats li { color: rgba(0,0,0,.65); }
+        .plan-feats li::before {
+            content: '✓';
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--lime);
+            flex-shrink: 0;
+        }
+        .plan-featured .plan-feats li::before { color: #000; }
+        .plan-btn {
+            display: block;
+            text-align: center;
+            padding: 14px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all .2s;
+        }
+        .plan:not(.plan-featured) .plan-btn {
+            border: 1px solid rgba(255,255,255,.15);
+            color: var(--white);
+        }
+        .plan:not(.plan-featured) .plan-btn:hover { border-color: var(--lime); color: var(--lime); }
+        .plan-featured .plan-btn { background: #000; color: var(--lime); }
+        .plan-featured .plan-btn:hover { background: #111; }
+
+        /* ─── TESTIMONIALS ─── */
+        .testi-headline {
+            font-size: clamp(40px, 5vw, 68px);
+            font-weight: 900;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+            line-height: .92;
+            margin-bottom: 64px;
+        }
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .testi-card {
+            background: var(--card);
+            border-radius: 6px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,.05);
+        }
+        .stars { color: var(--lime); font-size: 13px; letter-spacing: 2px; margin-bottom: 22px; }
+        .testi-quote {
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 28px;
+        }
+        .testi-author { display: flex; align-items: center; gap: 14px; }
+        .avatar {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: var(--bg2);
+            border: 1px solid rgba(255,255,255,.08);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 800;
+            color: var(--lime);
+            flex-shrink: 0;
+        }
+        .author-name { font-size: 14px; font-weight: 700; }
+        .author-since { font-size: 12px; color: var(--muted); }
+
+        /* ─── CTA STRIP ─── */
+        .cta-strip {
+            margin: 0 64px 140px;
+            background: var(--lime);
+            border-radius: 10px;
+            padding: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        .cta-strip-headline {
+            font-size: clamp(36px, 4.5vw, 60px);
+            font-weight: 900;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+            color: #000;
+            line-height: .92;
+        }
+        .cta-strip-sub { font-size: 15px; color: rgba(0,0,0,.55); margin-top: 14px; }
+        .btn-black {
+            background: #000;
+            color: var(--lime);
+            padding: 18px 40px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .2s;
+            flex-shrink: 0;
+        }
+        .btn-black:hover { background: #111; }
+
+        /* ─── CONTACT ─── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+        .contact-headline {
+            font-size: clamp(40px, 5vw, 68px);
+            font-weight: 900;
+            letter-spacing: -.04em;
+            text-transform: uppercase;
+            line-height: .92;
+            margin-bottom: 48px;
+        }
+        .contact-details { display: flex; flex-direction: column; gap: 28px; }
+        .c-item h5 {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--lime);
+            margin-bottom: 8px;
+        }
+        .c-item p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+        .form { display: flex; flex-direction: column; gap: 14px; }
+        .fg { display: flex; flex-direction: column; gap: 7px; }
+        .fg label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .fg input, .fg textarea, .fg select {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 3px;
+            padding: 13px 16px;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: border-color .2s;
+            appearance: none;
+        }
+        .fg textarea { min-height: 110px; resize: vertical; }
+        .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--lime); }
+        .fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,.2); }
+        .map-directions:hover { border-color: var(--lime) !important; color: var(--lime) !important; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--bg2);
+            border-top: 1px solid rgba(255,255,255,.05);
+            padding: 48px 64px;
+        }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-logo img { height: 32px; filter: invert(1); opacity: .5; }
+        .footer-links { display: flex; gap: 28px; list-style: none; }
+        .footer-links a {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.3);
+            text-decoration: none;
+            transition: color .2s;
+        }
+        .footer-links a:hover { color: var(--white); }
+        .footer-copy { font-size: 11px; color: rgba(255,255,255,.2); }
+
+        /* ─── TYPOGRAPHY ─── */
+        h1, h2, h3,
+        .hero-headline, .exp-headline, .zones-headline, .membership-headline,
+        .testi-headline, .contact-headline, .cta-strip-headline,
+        .zone-name, .plan-price, .stat-num, .wellness-hl {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: .04em;
+            font-weight: 400;
+        }
+        /* UI chrome stays Inter */
+        nav, .btn, .section-tag, .hero-eyebrow, .hero-scroll,
+        label, input, textarea, select, .plan-btn, .plan-badge,
+        .stat-lbl, .zone-no, .zone-desc, .plan-period, .plan-name,
+        .footer-links, .footer-copy, .author-name, .author-since,
+        .nav-links, .hamburger, button, .ph-label, .c-item h5,
+        .feat, .feature-list, .form {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Body / paragraph text stays Merriweather */
+        p, .exp-text, .hero-body, .zone-desc, .testi-quote,
+        .zones-sub, .membership-sub, .wellness-sub, .c-item p,
+        .cta-strip-sub { font-family: 'Inter', sans-serif; }
+
+        /* ─── REVEAL ─── */
+        .r {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .r.in { opacity: 1; transform: none; }
+        .r.d1 { transition-delay: .1s; }
+        .r.d2 { transition-delay: .2s; }
+        .r.d3 { transition-delay: .3s; }
+        .r.d4 { transition-delay: .4s; }
+
+        /* ─── MOBILE ─── */
+        @media (max-width: 1024px) {
+            nav, .hero, .sec, .sec-sm, .cta-strip { padding-left: 40px; padding-right: 40px; }
+            .cta-strip { margin-left: 40px; margin-right: 40px; }
+            nav.scrolled { padding-left: 40px; padding-right: 40px; }
+            footer { padding: 40px; }
+            .hero-scroll { left: 40px; }
+            .experience-grid, .contact-grid { grid-template-columns: 1fr; gap: 60px; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 20px 24px; }
+            nav.scrolled { padding: 14px 24px; }
+            .nav-links { display: none; flex-direction: column; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,10,10,.98); justify-content: center; align-items: center; gap: 32px; z-index: 99; }
+            .nav-links.open { display: flex; }
+            .nav-links a { font-size: 18px; }
+            .hamburger { display: flex; z-index: 100; }
+
+            /* Hero */
+            .hero { padding: 100px 24px 80px; min-height: 100svh; justify-content: center; align-items: center; text-align: center; }
+            .hero-headline { font-size: clamp(52px, 14vw, 80px); }
+            .hero-body { font-size: 15px; max-width: 100%; }
+            .hero-actions { flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+            .hero-actions .btn { width: 100%; justify-content: center; }
+            .hero-scroll { left: 50%; transform: translateX(-50%); }
+
+            /* Stats */
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.05); padding: 32px 20px; }
+            .stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.05); }
+            .stat:nth-last-child(-n+2) { border-bottom: none; }
+
+            /* Sections */
+            .sec, .sec-sm { padding: 64px 24px; }
+
+            /* Zones */
+            .zones-header { flex-direction: column; align-items: center; text-align: center; }
+            .zones-sub { text-align: center; }
+            .plans, .testi-grid { grid-template-columns: 1fr; }
+            .zone-row { grid-template-columns: 60px 1fr; gap: 20px; padding: 28px 0; }
+            .zone-no { font-size: 48px; }
+            .zone-row-arrow { display: none; }
+
+            /* Pricing — force all grids to single column */
+            [style*="grid-template-columns:repeat(5"] { grid-template-columns: 1fr !important; }
+            [style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+            [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+            [style*="grid-template-columns:1fr 2fr"]  { grid-template-columns: 1fr !important; }
+
+            /* Photos */
+            .photo-grid { grid-template-columns: 1fr; height: auto; }
+            .photo-slot { height: 240px; }
+
+            /* Smart Gym */
+            .smart-gym-grid { grid-template-columns: 1fr !important; gap: 40px !important; padding: 40px 24px !important; }
+
+            /* CTA strip */
+            .cta-strip { margin: 0 24px 64px; padding: 40px 24px; flex-direction: column; gap: 24px; text-align: center; }
+
+            /* Footer */
+            footer { padding: 40px 24px; }
+            .footer-inner { flex-direction: column; text-align: center; gap: 32px; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav id="nav">
+    <a href="#" class="nav-logo">
+        <img src="brand_assets/topgym%20logo.png" alt="TOP GYM">
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#experience">Iskustvo</a></li>
+        <li><a href="#zones">Trening</a></li>
+        <li><a href="#pricing">Članstvo</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+        <li><a href="#pricing" class="nav-cta">Pridruži Se</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+    <div class="hero-bg-paths"></div>
+    <div class="hero-glow"></div>
+
+    <div class="hero-eyebrow">Vrhunski Fitness · Virovitica</div>
+    <h1 class="hero-headline">
+        Treniraj<br>
+        Kao Da Ti<br>
+        Je <em>Stalo.</em>
+    </h1>
+    <p class="hero-body">
+        TOP GYM je mjesto gdje se disciplina susreće s performansom.
+        Vrhunsko fitness iskustvo stvoreno za ljude koji ozbiljno shvaćaju rezultate.
+    </p>
+    <div class="hero-actions">
+        <a href="#pricing" class="btn btn-lime">Počni Trenirati</a>
+        <a href="#experience" class="btn btn-outline">Istraži Teretanu</a>
+    </div>
+    <div style="display:flex; gap:32px; margin-top:48px; flex-wrap:wrap; justify-content:center;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>535 m² Prostora</div>
+        <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>50+ Sprava</div>
+        <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>6 Zona Treninga</div>
+    </div>
+
+    <div class="hero-scroll">
+        <div class="scroll-indicator"></div>
+        Skrolaj za više
+    </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats">
+    <div class="stat r">
+        <div class="stat-num" data-target="535" data-suffix=" m²">0</div>
+        <div class="stat-lbl">Površine Prostora</div>
+    </div>
+    <div class="stat r d1">
+        <div class="stat-num" data-target="50" data-suffix="+">0</div>
+        <div class="stat-lbl">Modernih Sprava</div>
+    </div>
+    <div class="stat r d2">
+        <div class="stat-num" data-target="6" data-suffix="">0</div>
+        <div class="stat-lbl">Zona Treninga</div>
+    </div>
+    <div class="stat r d3">
+        <div class="stat-num" data-target="2026" data-suffix=".">0</div>
+        <div class="stat-lbl">Godina Otvaranja</div>
+    </div>
+</div>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section class="sec" id="experience">
+    <div class="experience-grid">
+        <div>
+            <div class="section-tag">Iskustvo</div>
+            <h2 class="exp-headline r">
+                Ovo Nije<br>Obična<br><em>Teretana.</em>
+            </h2>
+        </div>
+        <div class="r d1">
+            <p class="exp-text">
+                TOP GYM nije samo teretana — to je kompletan fitness ekosustav. Od vrhunske opreme i personalnih trenera do wellness zone i lounge bara, sve što ti treba za transformaciju nalazi se na jednom mjestu.
+            </p>
+            <div class="feature-list">
+                <div class="feat"><div class="feat-dot"></div>Klasična teretana — najmodernija oprema, kardio zona, sprave i slobodni utezi</div>
+                <div class="feat"><div class="feat-dot"></div>Grupni treninzi — pilates i funkcionalni treninzi</div>
+                <div class="feat"><div class="feat-dot"></div>Personalni treninzi — individualni rad s certificiranim trenerima</div>
+                <div class="feat"><div class="feat-dot"></div>Specijalizirani "Booty Corner" za ciljane treninge</div>
+                <div class="feat"><div class="feat-dot"></div>Wellness zona — sauna, ledena kupka i masažni tuš</div>
+                <div class="feat"><div class="feat-dot"></div>Lounge bar — proteinski napitci i nutritivno balansirani obroci</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="photo-grid">
+        <div class="photo-placeholder r" style="aspect-ratio: 3/4;">
+            <img src="brand_assets/topgym%20booty%20corner.jpg" alt="Booty Corner" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 50%);z-index:2;"></div>
+            <div class="ph-corner" style="z-index:3;"></div>
+            <div class="ph-bar" style="z-index:3;"></div>
+            <span class="ph-label" style="z-index:3;">Booty Corner</span>
+        </div>
+        <div class="photo-placeholder r d1" style="aspect-ratio: 3/4; margin-top: 48px;">
+            <img src="brand_assets/topgym%20cardio.jpg" alt="Kardio Zona" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 50%);z-index:2;"></div>
+            <div class="ph-bar" style="z-index:3;"></div>
+            <span class="ph-label" style="z-index:3;">Trening Sala</span>
+        </div>
+        <div class="photo-placeholder r d2" style="aspect-ratio: 3/4;">
+            <img src="brand_assets/topgym%20sef.jpg" alt="Naši Treneri" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 50%);z-index:2;"></div>
+            <div class="ph-bar" style="z-index:3;"></div>
+            <span class="ph-label" style="z-index:3;">Osnivači</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ TRAINING ZONES ═══ -->
+<section class="sec" id="zones" style="padding-top: 0;">
+    <div class="zones-header">
+        <div>
+            <div class="section-tag">Zone za Trening</div>
+            <h2 class="zones-headline r">
+                Za Svaku<br>Disciplinu.
+            </h2>
+        </div>
+        <p class="zones-sub r d1">
+            Od teškog dizanja do funkcionalnog fitnessa — svaka zona je opremljena i uređena za ozbiljan trening.
+        </p>
+    </div>
+    <div class="zones-list">
+        <div class="zone-row r">
+            <div class="zone-no">01</div>
+            <div class="zone-row-body">
+                <h3 class="zone-name">Klasična Teretana</h3>
+                <p class="zone-desc">Najmodernija oprema, slobodni utezi, olimpijske šipke, čučanj stalci i kompletan raspon sprava za svaki mišić.</p>
+            </div>
+        </div>
+        <div class="zone-row r d1">
+            <div class="zone-no">02</div>
+            <div class="zone-row-body">
+                <h3 class="zone-name">Kardio Zona</h3>
+                <p class="zone-desc">Trake za trčanje, veslački ergometri, assault bicikli i stepeničari. Visoko učinkovit kardio za svaku razinu intenziteta.</p>
+            </div>
+        </div>
+        <div class="zone-row r d2">
+            <div class="zone-no">03</div>
+            <div class="zone-row-body">
+                <h3 class="zone-name">Booty Corner</h3>
+                <p class="zone-desc">Specijalizirana zona za ciljane treninge stražnjice i nogu — oprema, vježbe i program koji donose vidljive rezultate.</p>
+            </div>
+        </div>
+        <div class="zone-row r d3">
+            <div class="zone-no">04</div>
+            <div class="zone-row-body">
+                <h3 class="zone-name">Grupni & Funkcionalni</h3>
+                <p class="zone-desc">Pilates, funkcionalni treninzi i grupni satovi koje vode certificirani treneri. Energija grupe, rezultati pojedinca.</p>
+            </div>
+        </div>
+        <div class="zone-row r d4">
+            <div class="zone-no">05</div>
+            <div class="zone-row-body">
+                <h3 class="zone-name">Wellness Zona</h3>
+                <p class="zone-desc">Sauna, ledena kupka i masažni tuš za potpun oporavak. Dostupno i u privatnim terminima, uz potpunu diskreciju.</p>
+            </div>
+        </div>
+        <div class="zone-row r d4">
+            <div class="zone-no">06</div>
+            <div class="zone-row-body">
+                <h3 class="zone-name">Lounge Bar</h3>
+                <p class="zone-desc">Proteinski napitci i nutritivno balansirani obroci — gorivo za tijelo prije i nakon treninga, na jednom mjestu.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ SMART GYM ═══ -->
+<section class="sec" style="padding-top: 0;">
+    <div class="smart-gym-grid" style="background: var(--card); border-radius: 10px; padding: 72px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; border: 1px solid rgba(255,255,255,.06);">
+        <div class="r">
+            <div class="section-tag">Pametna Teretana</div>
+            <h2 style="font-size: clamp(36px, 4vw, 58px); font-weight: 900; letter-spacing: .14em; text-transform: uppercase; line-height: .92; margin-bottom: 24px;">
+                QR Kod na<br>Svakoj <em style="font-style:normal; color:var(--lime);">Spravi.</em>
+            </h2>
+            <p style="font-size: 15px; line-height: 1.8; color: var(--muted);">
+                Jedna od ključnih inovacija u TOP GYM-u je digitalni pristup treningu. Na svakoj spravi nalazi se QR kod koji ti odmah daje sve što trebaš znati.
+            </p>
+        </div>
+        <div class="r d1" style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; align-items: flex-start; gap: 20px; padding: 24px; background: var(--bg2); border-radius: 6px; border: 1px solid rgba(255,255,255,.05);">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(212,255,0,.1); border: 1px solid rgba(212,255,0,.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;">📋</div>
+                <div>
+                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Upute za izvođenje vježbi</div>
+                    <div style="font-size: 15px; color: var(--muted); line-height: 1.6;">Pravilna tehnika za svaku vježbu dostupna u sekundi.</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px; padding: 24px; background: var(--bg2); border-radius: 6px; border: 1px solid rgba(255,255,255,.05);">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(212,255,0,.1); border: 1px solid rgba(212,255,0,.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;">💪</div>
+                <div>
+                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Prikaz aktivnih mišića</div>
+                    <div style="font-size: 15px; color: var(--muted); line-height: 1.6;">Vizualni prikaz koji mišići se aktiviraju pri svakom pokretu.</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px; padding: 24px; background: var(--bg2); border-radius: 6px; border: 1px solid rgba(255,255,255,.05);">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(212,255,0,.1); border: 1px solid rgba(212,255,0,.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px;">🎬</div>
+                <div>
+                    <div style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Video demonstracija vježbe</div>
+                    <div style="font-size: 15px; color: var(--muted); line-height: 1.6;">Gledaj kako se pravilno izvodi svaka vježba — bez nagađanja.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ WELLNESS ═══ -->
+<section class="sec" id="wellness" style="background: var(--bg2);">
+    <div style="text-align:center; margin-bottom: 72px;">
+        <div class="section-tag" style="justify-content:center;">Wellness & Oporavak</div>
+        <h2 class="wellness-hl r" style="font-size: clamp(48px, 7vw, 100px); font-weight:400; letter-spacing:.04em; text-transform:uppercase; line-height:.92; margin-bottom:20px;">Tijelo Treba<br><em style="font-style:normal; color:var(--lime);">Oporavak.</em></h2>
+        <p class="wellness-sub r d1" style="font-size:16px; color:var(--muted); max-width:520px; margin:0 auto; line-height:1.8;">
+            TOP GYM wellness zona dostupna je svim članovima — uključujući privatne termine s punom diskrecijom.
+        </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:2px; margin-bottom:2px;">
+        <!-- SAUNA -->
+        <div class="zone-card r" style="background:var(--card); padding:48px 36px; min-height:340px;">
+            <div style="font-size:48px; margin-bottom:28px; line-height:1;">🔥</div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Sauna</h3>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Finska sauna na visokim temperaturama. Opušta mišiće, detoksicira tijelo i poboljšava cirkulaciju — idealna nakon svakog treninga.</p>
+            <div class="zone-bar"></div>
+        </div>
+        <!-- HOT TUB -->
+        <div class="zone-card r d1" style="background:var(--card); padding:48px 36px; min-height:340px;">
+            <div style="font-size:48px; margin-bottom:28px; line-height:1;">♨️</div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Hot Tub</h3>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Topla kupka s hidro masažnim mlaznicama. Smanjuje napetost mišića, potiče oporavak i pruža pravo iskustvo relaksacije.</p>
+            <div class="zone-bar"></div>
+        </div>
+        <!-- COLD TUB -->
+        <div class="zone-card r d2" style="background:var(--card); padding:48px 36px; min-height:340px;">
+            <div style="font-size:48px; margin-bottom:28px; line-height:1;">❄️</div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Cold Tub</h3>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Ledena kupka za brzo smanjenje upala i mišićnih bolova. Omiljeni alat profesionalnih sportaša — sada dostupan svima.</p>
+            <div class="zone-bar"></div>
+        </div>
+        <!-- HIDROMASAŽNI TUŠ -->
+        <div class="zone-card r d3" style="background:var(--card); padding:48px 36px; min-height:340px;">
+            <div style="font-size:48px; margin-bottom:28px; line-height:1;">🚿</div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:16px; font-weight:400;">Hidromasažni Tuš</h3>
+            <p style="font-size:13px; color:var(--muted); line-height:1.75;">Masažni tuš s više načina rada za savršen završetak svake sesije. Kombiniraj s ostalim wellness sadržajima za potpun oporavak.</p>
+            <div class="zone-bar"></div>
+        </div>
+    </div>
+
+    <!-- Lounge Bar / Protein strip -->
+    <div class="r" style="background:var(--lime); border-radius:0 0 8px 8px; padding:48px 64px; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+        <div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(0,0,0,.5); margin-bottom:10px; font-family:'Inter',sans-serif;">Lounge Bar</div>
+            <h3 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,4vw,52px); letter-spacing:.06em; text-transform:uppercase; color:#000; font-weight:400; line-height:.95; margin-bottom:10px;">Proteinski Napitci<br>& Obroci</h3>
+            <p style="font-size:14px; color:rgba(0,0,0,.6); max-width:380px; line-height:1.7; font-family:'Inter', sans-serif;">Protein šejkovi, energetski napitci i nutritivno balansirani obroci — sve dostupno odmah u teretani, kad ti treba.</p>
+        </div>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; flex-shrink:0;">
+            <div style="background:rgba(0,0,0,.12); border-radius:6px; padding:20px 28px; text-align:center; font-family:'Inter',sans-serif;">
+                <div style="font-size:28px; margin-bottom:6px;">🥤</div>
+                <div style="font-size:11px; font-weight:700; letter-spacing:.1em; color:#000; text-transform:uppercase;">Protein<br>Shakes</div>
+            </div>
+            <div style="background:rgba(0,0,0,.12); border-radius:6px; padding:20px 28px; text-align:center; font-family:'Inter',sans-serif;">
+                <div style="font-size:28px; margin-bottom:6px;">⚡</div>
+                <div style="font-size:11px; font-weight:700; letter-spacing:.1em; color:#000; text-transform:uppercase;">Energy<br>Drinks</div>
+            </div>
+            <div style="background:rgba(0,0,0,.12); border-radius:6px; padding:20px 28px; text-align:center; font-family:'Inter',sans-serif;">
+                <div style="font-size:28px; margin-bottom:6px;">🥗</div>
+                <div style="font-size:11px; font-weight:700; letter-spacing:.1em; color:#000; text-transform:uppercase;">Balansirani<br>Obroci</div>
+            </div>
+            <div style="background:rgba(0,0,0,.12); border-radius:6px; padding:20px 28px; text-align:center; font-family:'Inter',sans-serif;">
+                <div style="font-size:28px; margin-bottom:6px;">🍫</div>
+                <div style="font-size:11px; font-weight:700; letter-spacing:.1em; color:#000; text-transform:uppercase;">Proteinske<br>Pločice</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="sec">
+    <div class="section-tag">Google Recenzije</div>
+    <h2 class="testi-headline r">Što Kažu<br><em style="font-style:normal;color:var(--lime);">Članovi.</em></h2>
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:48px;" class="r d1">
+        <div style="font-size:48px; font-weight:900; font-family:'Bebas Neue',sans-serif; letter-spacing:.04em; color:var(--lime); line-height:1;">5.0</div>
+        <div>
+            <div style="color:var(--lime); font-size:20px; letter-spacing:4px; margin-bottom:4px;">★★★★★</div>
+            <div style="font-size:12px; color:var(--muted); font-family:'Inter',sans-serif; letter-spacing:.08em; text-transform:uppercase;">Google recenzije · Top Gym Virovitica</div>
+        </div>
+    </div>
+    <div class="testi-grid">
+        <div class="testi-card r">
+            <div class="stars">★★★★★</div>
+            <p class="testi-quote">„Odlična teretana! Oprema je nova i moderna, prostor je čist i uredan, a osoblje izuzetno ljubazno. Wellness zona je pravi bonus — sauna i ledena kupka su fantastični za oporavak."</p>
+            <div class="testi-author">
+                <div class="avatar">M</div>
+                <div>
+                    <div class="author-name">Matija B.</div>
+                    <div class="author-since">Recenzija s Google Mapsa</div>
+                </div>
+            </div>
+        </div>
+        <div class="testi-card r d1">
+            <div class="stars">★★★★★</div>
+            <p class="testi-quote">„Konačno teretana kakvu smo zaslužili u Virovitici! QR kodovi na spravama su odlična ideja, posebno za početnike. Treneri su stručni i uvijek dostupni za pomoć."</p>
+            <div class="testi-author">
+                <div class="avatar">K</div>
+                <div>
+                    <div class="author-name">Kristina V.</div>
+                    <div class="author-since">Recenzija s Google Mapsa</div>
+                </div>
+            </div>
+        </div>
+        <div class="testi-card r d2">
+            <div class="stars">★★★★★</div>
+            <p class="testi-quote">„Booty Corner je nešto posebno — napokon zona specijalizirana za ono što nas zanima! Atmosfera u cijeloj teretani je premium, osjećaš se kao da treniraš u velikom gradu."</p>
+            <div class="testi-author">
+                <div class="avatar">L</div>
+                <div>
+                    <div class="author-name">Lucija H.</div>
+                    <div class="author-since">Recenzija s Google Mapsa</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="sec" id="pricing" style="background:var(--bg2);">
+    <div style="text-align:center; margin-bottom:80px;">
+        <div class="section-tag" style="justify-content:center;">Cijenik</div>
+        <h2 class="r" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(56px,8vw,100px); letter-spacing:.05em; text-transform:uppercase; line-height:.9; margin-bottom:16px;">
+            Transparentne <em style="font-style:normal; color:var(--lime);">Cijene.</em>
+        </h2>
+        <p class="r d1" style="font-size:15px; color:var(--muted); max-width:460px; margin:0 auto;">Bez skrivenih troškova. Plati ono što koristiš.</p>
+    </div>
+
+    <!-- INDIVIDUALNI TRENINZI -->
+    <div style="margin-bottom:60px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
+            <span style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.12em; text-transform:uppercase; color:var(--white);">Individualni i Poluindividualni Treninzi</span>
+            <div style="flex:1; height:1px; background:rgba(255,255,255,.07);"></div>
+        </div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:28px; font-family:'Inter',sans-serif;">Svi paketi uključuju svakodnevni pristup teretani.</p>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:3px;">
+            <div class="zone-card r" style="background:var(--card); padding:44px 40px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-family:'Inter',sans-serif;">Individualni 1:1</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:72px; line-height:1; letter-spacing:.02em; margin-bottom:4px;">200<sup style="font-size:28px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:28px; font-family:'Inter',sans-serif;">mjesečno · jedan trener, jedan klijent</div>
+                <a href="#contact" onclick="selectPlan('Individualni Trening 1:1 (200 €/mj)');return false;" style="display:block; text-align:center; padding:13px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+            <div class="zone-card r d1" style="background:var(--card); padding:44px 40px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-family:'Inter',sans-serif;">Poluindividualni 1:2</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:72px; line-height:1; letter-spacing:.02em; margin-bottom:4px;">160<sup style="font-size:28px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:28px; font-family:'Inter',sans-serif;">mjesečno · jedan trener, dva klijenta</div>
+                <a href="#contact" onclick="selectPlan('Poluindividualni Trening 1:2 (160 €/mj)');return false;" style="display:block; text-align:center; padding:13px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+            <div class="zone-card r d2" style="background:var(--card); padding:44px 40px;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-family:'Inter',sans-serif;">Poluindividualni 1:4</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:72px; line-height:1; letter-spacing:.02em; margin-bottom:4px;">120<sup style="font-size:28px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:28px; font-family:'Inter',sans-serif;">mjesečno · jedan trener, četiri klijenta</div>
+                <a href="#contact" onclick="selectPlan('Poluindividualni Trening 1:4 (120 €/mj)');return false;" style="display:block; text-align:center; padding:13px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KLASIČNA TERETANA -->
+    <div id="klasicna-teretana" style="margin-bottom:60px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:28px;">
+            <span style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.12em; text-transform:uppercase; color:var(--white);">Klasična Teretana</span>
+            <div style="flex:1; height:1px; background:rgba(255,255,255,.07);"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:3px;">
+            <div class="zone-card r" style="background:var(--card); padding:40px 32px; text-align:center;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-family:'Inter',sans-serif;">Dnevna</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:1; letter-spacing:.02em; margin-bottom:4px;">7<sup style="font-size:24px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:24px; font-family:'Inter',sans-serif;">jednodnevna ulaznica</div>
+                <a href="#contact" onclick="selectPlan('Klasična Teretana — Dnevna (7 €)');return false;" style="display:block; text-align:center; padding:11px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+            <div class="zone-card r d1" style="background:var(--card); padding:40px 32px; text-align:center;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-family:'Inter',sans-serif;">Mjesečna</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:1; letter-spacing:.02em; margin-bottom:4px;">35<sup style="font-size:24px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:24px; font-family:'Inter',sans-serif;">3× tjedno</div>
+                <a href="#contact" onclick="selectPlan('Klasična Teretana — Mjesečna 3× tjedno (35 €)');return false;" style="display:block; text-align:center; padding:11px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+            <div class="zone-card r d2" style="background:var(--card); padding:40px 32px; text-align:center;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-family:'Inter',sans-serif;">Mjesečna</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:1; letter-spacing:.02em; margin-bottom:4px;">40<sup style="font-size:24px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:24px; font-family:'Inter',sans-serif;">neograničeno</div>
+                <a href="#contact" onclick="selectPlan('Klasična Teretana — Mjesečna neograničeno (40 €)');return false;" style="display:block; text-align:center; padding:11px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+            <div class="zone-card r d3" style="background:var(--lime); padding:0 32px 40px; text-align:center; display:flex; flex-direction:column;">
+                <div style="background:#000; color:var(--lime); font-size:9px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; padding:9px 0; margin:0 -32px 24px; text-align:center; font-family:'Inter',sans-serif;">★ Najpopularnije</div>
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(0,0,0,.55); margin-bottom:20px; font-family:'Inter',sans-serif;">6 Mjeseci</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:1; letter-spacing:.02em; margin-bottom:4px; color:#000;">180<sup style="font-size:24px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:rgba(0,0,0,.55); margin-bottom:24px; font-family:'Inter',sans-serif;">6 mjeseci neograničeno</div>
+                <a href="#contact" onclick="selectPlan('Klasična Teretana — 6 Mjeseci (180 €)');return false;" style="display:block; text-align:center; padding:11px; background:#000; border-radius:3px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--lime); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.background='#111';" onmouseout="this.style.background='#000';">Saznaj više</a>
+            </div>
+            <div class="zone-card r d4" style="background:var(--card); padding:40px 32px; text-align:center;">
+                <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:20px; font-family:'Inter',sans-serif;">Godišnja</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; line-height:1; letter-spacing:.02em; margin-bottom:4px;">350<sup style="font-size:24px; vertical-align:super;">€</sup></div>
+                <div style="font-size:12px; color:var(--muted); margin-bottom:24px; font-family:'Inter',sans-serif;">365 dana · uštedi 29€/mj</div>
+                <a href="#contact" onclick="selectPlan('Klasična Teretana — Godišnja (350 €)');return false;" style="display:block; text-align:center; padding:11px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRUPNI TRENINZI -->
+    <div style="margin-bottom:60px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:28px;">
+            <span style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.12em; text-transform:uppercase; color:var(--white);">Grupni Treninzi</span>
+            <div style="flex:1; height:1px; background:rgba(255,255,255,.07);"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 2fr; gap:3px;">
+            <div class="zone-card r" style="background:var(--card); padding:44px 40px; display:flex; align-items:center; gap:40px;">
+                <div>
+                    <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; font-family:'Inter',sans-serif;">Mjesečna pretplata</div>
+                    <div style="font-family:'Bebas Neue',sans-serif; font-size:72px; line-height:1; letter-spacing:.02em;">50<sup style="font-size:28px; vertical-align:super;">€</sup></div>
+                </div>
+                <div class="zone-bar"></div>
+            </div>
+            <div style="background:var(--card); padding:44px 40px; display:flex; align-items:center; gap:48px; flex-wrap:wrap;">
+                <div>
+                    <div style="font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--lime); margin-bottom:10px; font-family:'Inter',sans-serif;">Uključeno</div>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div style="font-size:14px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Pilates satovi</div>
+                        <div style="font-size:14px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Funkcionalni treninzi</div>
+                        <div style="font-size:14px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Neograničen broj dolazaka</div>
+                        <div style="font-size:14px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Stručni instruktori</div>
+                    </div>
+                </div>
+                <a href="#contact" onclick="selectPlan('Grupni Treninzi — Pilates / Funkcionalni (50 €/mj)');return false;" class="btn btn-lime" style="flex-shrink:0; margin-left:auto;">Saznaj više</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- WELLNESS ZONA -->
+    <div>
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:28px;">
+            <span style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.12em; text-transform:uppercase; color:var(--white);">Wellness Zona</span>
+            <div style="flex:1; height:1px; background:rgba(255,255,255,.07);"></div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:3px;">
+            <!-- Za korisnike s karticom -->
+            <div class="zone-card r" style="background:var(--card); padding:44px 48px; position:relative; overflow:hidden;">
+                <div style="position:absolute; top:0; left:0; width:3px; height:100%; background:var(--lime);"></div>
+                <div style="font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--lime); margin-bottom:16px; font-family:'Inter',sans-serif;">Članovi</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:80px; line-height:1; letter-spacing:.02em; margin-bottom:8px;">17<sup style="font-size:32px; vertical-align:super;">€</sup></div>
+                <div style="font-size:13px; color:var(--muted); margin-bottom:28px; font-family:'Inter',sans-serif;">1h rezervacija · cijena nije po osobi</div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:32px;">
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Sauna</div>
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Ledena kupka</div>
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Hidromasažni tuš</div>
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--lime);">✓</span> Privatni termini dostupni</div>
+                </div>
+                <a href="#contact" onclick="selectPlan('Wellness Zona — Privatni Termin');return false;" style="display:inline-flex; align-items:center; padding:12px 28px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+            <!-- Za vanjske korisnike -->
+            <div class="zone-card r d1" style="background:var(--card); padding:44px 48px; position:relative; overflow:hidden;">
+                <div style="font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:16px; font-family:'Inter',sans-serif;">Nečlanovi</div>
+                <div style="font-family:'Bebas Neue',sans-serif; font-size:80px; line-height:1; letter-spacing:.02em; margin-bottom:8px;">20<sup style="font-size:32px; vertical-align:super;">€</sup></div>
+                <div style="font-size:13px; color:var(--muted); margin-bottom:28px; font-family:'Inter',sans-serif;">1h rezervacija · cijena nije po osobi</div>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:32px;">
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--muted);">✓</span> Sauna</div>
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--muted);">✓</span> Ledena kupka</div>
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--muted);">✓</span> Hidromasažni tuš</div>
+                    <div style="font-size:13px; color:var(--muted); display:flex; gap:10px; font-family:'Inter',sans-serif;"><span style="color:var(--muted);">✓</span> Rezervacija termina</div>
+                </div>
+                <a href="#contact" onclick="selectPlan('Wellness Zona — Privatni Termin');return false;" style="display:inline-flex; align-items:center; padding:12px 28px; border:1px solid rgba(255,255,255,.15); border-radius:3px; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; color:var(--white); font-family:'Inter',sans-serif; transition:all .2s;" onmouseover="this.style.borderColor='var(--lime)';this.style.color='var(--lime)';" onmouseout="this.style.borderColor='rgba(255,255,255,.15)';this.style.color='var(--white)';">Saznaj više</a>
+                <div class="zone-bar"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ CTA STRIP ═══ -->
+<div class="cta-strip r">
+    <div>
+        <h2 class="cta-strip-headline">Spreman Za<br>Početak?</h2>
+        <p class="cta-strip-sub">Pridruži se stotinama članova koji već treniraju u TOP GYM-u.</p>
+    </div>
+    <a href="#klasicna-teretana" class="btn-black btn-pulse">Postani Član →</a>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="sec" id="contact">
+    <div class="section-tag">Pronađi Nas</div>
+    <div class="contact-grid">
+        <div>
+            <h2 class="contact-headline r">Dođi I<br>Uvjeri Se.</h2>
+            <div class="contact-details">
+                <div class="c-item">
+                    <h5>Adresa</h5>
+                    <p>Trg Dr. Franje Tuđmana 3<br>33000 Virovitica, Hrvatska</p>
+                </div>
+                <div class="c-item">
+                    <h5>Radno Vrijeme</h5>
+                    <p>
+                        <span style="color:var(--lime);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;">Recepcija</span><br>
+                        Pon – Sub &nbsp; 10:00 – 20:00<br><br>
+                        <span style="color:var(--lime);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;">Teretana</span><br>
+                        Svaki dan &nbsp; 05:00 – 00:00
+                    </p>
+                </div>
+                <div class="c-item">
+                    <h5>Telefon</h5>
+                    <p>
+                        099 320 7250 &nbsp;<span style="color:var(--muted);font-size:12px;">(Renato)</span><br>
+                        099 666 7771 &nbsp;<span style="color:var(--muted);font-size:12px;">(Marin)</span>
+                    </p>
+                </div>
+                <div class="c-item">
+                    <h5>Specijalizirani Programi</h5>
+                    <p>Kondicijska priprema sportaša<br>Pripreme za vojsku i testiranja<br>Pripreme za Kineziološki fakultet</p>
+                </div>
+            </div>
+        </div>
+        <div class="r d1" style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Google Maps embed -->
+            <div style="border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,.07); flex-shrink:0; position:relative;">
+                <iframe
+                    src="https://maps.google.com/maps?q=TOP+GYM+Virovitica&output=embed&z=17"
+                    width="100%"
+                    height="340"
+                    style="display:block; border:0; filter:brightness(0.7) contrast(1.1) saturate(0.75);"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=TOP+GYM+Virovitica,+Trg+Dr.+Franje+Tu%C4%91mana+3,+33000+Virovitica" target="_blank" rel="noopener" class="map-directions" style="display:flex; align-items:center; justify-content:center; gap:10px; padding:14px; border-radius:6px; border:1px solid rgba(255,255,255,.1); color:var(--white); text-decoration:none; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-family:'Inter',sans-serif; transition:border-color .2s, color .2s;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                Otvori u Google Mapsu
+            </a>
+            <!-- Contact form -->
+            <div class="form">
+                <div class="fg">
+                    <label>Ime i Prezime</label>
+                    <input type="text" placeholder="Vaše ime">
+                </div>
+                <div class="fg">
+                    <label>Email Adresa</label>
+                    <input type="email" placeholder="vas@email.com">
+                </div>
+                <div class="fg">
+                    <label>Zanima Me</label>
+                    <select id="contact-select">
+                        <option value="" disabled selected>Odaberi što te zanima…</option>
+                        <option>Klasična Teretana — Dnevna (7 €)</option>
+                        <option>Klasična Teretana — Mjesečna 3× tjedno (35 €)</option>
+                        <option>Klasična Teretana — Mjesečna neograničeno (40 €)</option>
+                        <option>Klasična Teretana — 6 Mjeseci (180 €)</option>
+                        <option>Klasična Teretana — Godišnja (350 €)</option>
+                        <option>Individualni Trening 1:1 (200 €/mj)</option>
+                        <option>Poluindividualni Trening 1:2 (160 €/mj)</option>
+                        <option>Poluindividualni Trening 1:4 (120 €/mj)</option>
+                        <option>Grupni Treninzi — Pilates / Funkcionalni (50 €/mj)</option>
+                        <option>Kondicijska Priprema Sportaša</option>
+                        <option>Priprema za Vojsku / Testiranja</option>
+                        <option>Priprema za Kineziološki Fakultet</option>
+                        <option>Wellness Zona — Privatni Termin</option>
+                        <option>Opći Upit</option>
+                    </select>
+                </div>
+                <div class="fg">
+                    <label>Poruka</label>
+                    <textarea placeholder="Kako vam možemo pomoći napredovati?"></textarea>
+                </div>
+                <button class="btn btn-lime" style="width:100%; justify-content:center;">Pošalji Poruku</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+    <div class="footer-inner">
+        <a href="#" class="footer-logo">
+            <img src="brand_assets/topgym%20logo.png" alt="TOP GYM">
+        </a>
+        <ul class="footer-links">
+            <li><a href="#experience">Iskustvo</a></li>
+            <li><a href="#zones">Trening</a></li>
+            <li><a href="#pricing">Članstvo</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+        </ul>
+        <p class="footer-copy">© 2026 TOP GYM. Sva prava pridržana.</p>
+    </div>
+</footer>
+
+<script>
+    // ── Navbar scroll state
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── Mobile hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('navLinks');
+    let menuOpen = false;
+    hamburger.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        navLinks.classList.toggle('open', menuOpen);
+        hamburger.style.opacity = menuOpen ? '.5' : '1';
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            menuOpen = false;
+            navLinks.classList.remove('open');
+            hamburger.style.opacity = '1';
+        });
+    });
+
+    // ── Scroll reveal
+    const reveals = document.querySelectorAll('.r');
+    const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                revealObs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => revealObs.observe(el));
+
+    // ── Animated counters
+    const counters = document.querySelectorAll('.stat-num[data-target]');
+    const counterObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const target = parseInt(el.dataset.target);
+            const suffix = el.dataset.suffix !== undefined ? el.dataset.suffix : (target >= 100 ? '+' : '');
+            let cur = 0;
+            const step = Math.max(target / 60, 1);
+            const tick = setInterval(() => {
+                cur = Math.min(cur + step, target);
+                el.textContent = Math.round(cur) + suffix;
+                if (cur >= target) clearInterval(tick);
+            }, 24);
+            counterObs.unobserve(el);
+        });
+    }, { threshold: 0.6 });
+    counters.forEach(el => counterObs.observe(el));
+
+    // ── Smart plan selector: scroll to contact + auto-fill dropdown
+    function selectPlan(planText) {
+        const select = document.getElementById('contact-select');
+        if (select) {
+            for (const opt of select.options) {
+                if (opt.text === planText) {
+                    select.value = opt.value || opt.text;
+                    select.dispatchEvent(new Event('change'));
+                    break;
+                }
+            }
+        }
+        const contact = document.getElementById('contact');
+        if (contact) {
+            contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    window.selectPlan = selectPlan;
+
+    // ── Gradient Bars Background (ported from gradient-bars-background.tsx)
+    (function initGradientBars() {
+        const container = document.querySelector('.hero-bg-paths');
+        if (!container) return;
+
+        const numBars      = 15;
+        const gradientFrom = 'rgba(212, 255, 0, 0.28)'; // lime brand color
+        const gradientTo   = 'transparent';
+        const animDuration = 2;
+
+        function calcHeight(index, total) {
+            const position        = index / (total - 1);
+            const distFromCenter  = Math.abs(position - 0.5);
+            const heightPct       = Math.pow(distFromCenter * 2, 1.2);
+            return 30 + 70 * heightPct;
+        }
+
+        const flex = document.createElement('div');
+        flex.style.cssText = 'display:flex;width:100%;height:100%;transform:translateZ(0);';
+
+        for (let i = 0; i < numBars; i++) {
+            const h   = calcHeight(i, numBars);
+            const bar = document.createElement('div');
+            bar.style.cssText = `
+                flex:1 1 0;
+                min-width:0;
+                height:100%;
+                margin: 0 -1px;
+                background:linear-gradient(to top, ${gradientFrom}, ${gradientTo});
+                transform:scaleY(${(h / 100).toFixed(4)});
+                transform-origin:bottom;
+                animation:pulseBar ${animDuration}s ease-in-out infinite alternate;
+                animation-delay:${(i * 0.1).toFixed(1)}s;
+                --initial-scale:${(h / 100).toFixed(4)};
+            `;
+            flex.appendChild(bar);
+        }
+
+        container.appendChild(flex);
+    })();
+
+</script>
+
+</body>
+</html>
