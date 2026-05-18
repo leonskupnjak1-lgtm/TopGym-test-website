@@ -768,7 +768,9 @@
 
             /* Pricing — force all grids to single column */
             [style*="grid-template-columns:repeat(5"] { grid-template-columns: 1fr !important; }
-            [style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+            [style*="grid-template-columns:repeat(4"],
+            [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr 1fr !important; }
+            .lounge-strip { padding: 32px 24px !important; }
             [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
             [style*="grid-template-columns:1fr 2fr"]  { grid-template-columns: 1fr !important; }
 
@@ -1045,13 +1047,13 @@
     </div>
 
     <!-- Lounge Bar / Protein strip -->
-    <div class="r" style="background:var(--lime); border-radius:0 0 8px 8px; padding:48px 64px; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+    <div class="r lounge-strip" style="background:var(--lime); border-radius:0 0 8px 8px; padding:48px 64px; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
         <div>
             <div style="font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(0,0,0,.5); margin-bottom:10px; font-family:'Inter',sans-serif;">Lounge Bar</div>
             <h3 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,4vw,52px); letter-spacing:.06em; text-transform:uppercase; color:#000; font-weight:400; line-height:.95; margin-bottom:10px;">Proteinski Napitci<br>& Obroci</h3>
             <p style="font-size:14px; color:rgba(0,0,0,.6); max-width:380px; line-height:1.7; font-family:'Inter', sans-serif;">Protein šejkovi, energetski napitci i nutritivno balansirani obroci — sve dostupno odmah u teretani, kad ti treba.</p>
         </div>
-        <div style="display:flex; gap:16px; flex-wrap:wrap; flex-shrink:0;">
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
             <div style="background:rgba(0,0,0,.12); border-radius:6px; padding:20px 28px; text-align:center; font-family:'Inter',sans-serif;">
                 <div style="font-size:28px; margin-bottom:6px;">🥤</div>
                 <div style="font-size:11px; font-weight:700; letter-spacing:.1em; color:#000; text-transform:uppercase;">Protein<br>Shakes</div>
@@ -1320,7 +1322,7 @@
         </div>
         <div class="r d1" style="display:flex; flex-direction:column; gap:16px;">
             <!-- Google Maps embed -->
-            <div style="border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,.07); flex-shrink:0; position:relative;">
+            <div style="border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,.07); position:relative; width:100%;">
                 <iframe
                     src="https://maps.google.com/maps?q=TOP+GYM+Virovitica&output=embed&z=17"
                     width="100%"
