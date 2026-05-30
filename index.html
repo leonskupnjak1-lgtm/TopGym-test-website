@@ -99,10 +99,33 @@
             inset: 0;
             pointer-events: none;
             overflow: hidden;
+            z-index: 0;
         }
-        @keyframes pulseBar {
-            0%   { transform: scaleY(var(--initial-scale)); }
-            100% { transform: scaleY(calc(var(--initial-scale) * 0.7)); }
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,.72) 0%,
+                rgba(0,0,0,.28) 45%,
+                rgba(0,0,0,.62) 100%
+            );
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
         }
         .hero {
             min-height: 100svh;
@@ -821,27 +844,33 @@
 
 <!-- ═══ HERO ═══ -->
 <section class="hero">
-    <div class="hero-bg-paths"></div>
-    <div class="hero-glow"></div>
-
-    <div class="hero-eyebrow">Vrhunski Fitness · Virovitica</div>
-    <h1 class="hero-headline">
-        Treniraj<br>
-        Kao Da Ti<br>
-        Je <em>Stalo.</em>
-    </h1>
-    <p class="hero-body">
-        TOP GYM je mjesto gdje se disciplina susreće s performansom.
-        Vrhunsko fitness iskustvo stvoreno za ljude koji ozbiljno shvaćaju rezultate.
-    </p>
-    <div class="hero-actions">
-        <a href="#cta" class="btn btn-lime">Počni Trenirati</a>
-        <a href="#experience" class="btn btn-outline">Istraži Teretanu</a>
+    <div class="hero-bg-paths">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="brand_assets/topgym-hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
     </div>
-    <div style="display:flex; gap:32px; margin-top:48px; flex-wrap:wrap; justify-content:center;">
-        <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>535 m² Prostora</div>
-        <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>50+ Sprava</div>
-        <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>6 Zona Treninga</div>
+
+    <div class="hero-content">
+        <div class="hero-eyebrow">Vrhunski Fitness · Virovitica</div>
+        <h1 class="hero-headline">
+            Treniraj<br>
+            Kao Da Ti<br>
+            Je <em>Stalo.</em>
+        </h1>
+        <p class="hero-body">
+            TOP GYM je mjesto gdje se disciplina susreće s performansom.
+            Vrhunsko fitness iskustvo stvoreno za ljude koji ozbiljno shvaćaju rezultate.
+        </p>
+        <div class="hero-actions">
+            <a href="#cta" class="btn btn-lime btn-pulse">Počni Trenirati</a>
+            <a href="#experience" class="btn btn-outline">Istraži Teretanu</a>
+        </div>
+        <div style="display:flex; gap:32px; margin-top:48px; flex-wrap:wrap; justify-content:center;">
+            <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.55); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>535 m² Prostora</div>
+            <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.55); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>50+ Sprava</div>
+            <div style="font-size:11px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.55); font-family:'Inter',sans-serif;"><span style="color:var(--lime); margin-right:9px;">—</span>6 Zona Treninga</div>
+        </div>
     </div>
 
 </section>
@@ -1448,46 +1477,6 @@
     }
     window.selectPlan = selectPlan;
 
-    // ── Gradient Bars Background (ported from gradient-bars-background.tsx)
-    (function initGradientBars() {
-        const container = document.querySelector('.hero-bg-paths');
-        if (!container) return;
-
-        const numBars      = 10;
-        const gradientFrom = 'rgba(212, 255, 0, 0.28)'; // lime brand color
-        const gradientTo   = 'transparent';
-        const animDuration = 2;
-
-        function calcHeight(index, total) {
-            const position        = index / (total - 1);
-            const distFromCenter  = Math.abs(position - 0.5);
-            const heightPct       = Math.pow(distFromCenter * 2, 1.2);
-            return 30 + 70 * heightPct;
-        }
-
-        const flex = document.createElement('div');
-        flex.style.cssText = 'display:flex;width:100%;height:100%;transform:translateZ(0);';
-
-        for (let i = 0; i < numBars; i++) {
-            const h   = calcHeight(i, numBars);
-            const bar = document.createElement('div');
-            bar.style.cssText = `
-                flex:1 1 0;
-                min-width:0;
-                height:100%;
-                margin: 0 -1px;
-                background:linear-gradient(to top, ${gradientFrom}, ${gradientTo});
-                transform:scaleY(${(h / 100).toFixed(4)});
-                transform-origin:bottom;
-                animation:pulseBar ${animDuration}s ease-in-out infinite alternate;
-                animation-delay:${(i * 0.1).toFixed(1)}s;
-                --initial-scale:${(h / 100).toFixed(4)};
-            `;
-            flex.appendChild(bar);
-        }
-
-        container.appendChild(flex);
-    })();
 
 </script>
 
